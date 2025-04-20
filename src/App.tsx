@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs'
 import { Toaster } from './components/ui/toaster'
 import { useToast } from './hooks/use-toast'
 import { Loader2, Copy, Download, FileText, Shield, Scale } from 'lucide-react'
+import { generatePolicy, type PolicyType } from './lib/api'
 
 // Policy types
 const policyTypes = [
@@ -19,12 +20,12 @@ const policyTypes = [
 
 function App() {
   const [businessDescription, setBusinessDescription] = useState('')
-  const [policyType, setPolicyType] = useState('privacy')
+  const [policyType, setPolicyType] = useState<PolicyType>('privacy')
   const [generatedPolicy, setGeneratedPolicy] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
   const { toast } = useToast()
 
-  const generatePolicy = async () => {
+  const handleGeneratePolicy = async () => {
     if (!businessDescription.trim()) {
       toast({
         title: "Description Required",
@@ -37,27 +38,25 @@ function App() {
     setIsGenerating(true)
     
     try {
-      // In a real implementation, this would call an API endpoint
-      // For now, we'll simulate the API call with a timeout
-      setTimeout(() => {
-        const selectedPolicy = policyTypes.find(p => p.id === policyType)
-        const policyName = selectedPolicy ? selectedPolicy.name : 'Policy'
-        
-        setGeneratedPolicy(`# ${policyName} for Your Business\n\nThis ${policyName.toLowerCase()} is generated based on the following business description:\n\n"${businessDescription}"\n\n## 1. Introduction\n\nWelcome to our service. This document outlines how we collect, use, and protect your information.\n\n## 2. Information Collection\n\nWe collect information that you provide directly to us, such as when you create an account, subscribe to our service, or contact us for support.\n\n## 3. Use of Information\n\nWe use the information we collect to provide, maintain, and improve our services, to develop new ones, and to protect our company and users.\n\n## 4. Information Sharing\n\nWe do not share your personal information with companies, organizations, or individuals outside of our company except in the following cases: with your consent, with domain administrators, for legal reasons, or in case of a merger or acquisition.\n\n## 5. Security\n\nWe work hard to protect our users from unauthorized access to or unauthorized alteration, disclosure, or destruction of information we hold.\n\n## 6. Changes\n\nOur ${policyName.toLowerCase()} may change from time to time. We will post any privacy policy changes on this page.\n\n## 7. Contact Us\n\nIf you have any questions about our ${policyName.toLowerCase()}, please contact us.`);
-        
-        setIsGenerating(false)
-        toast({
-          title: "Policy Generated",
-          description: `Your ${policyName.toLowerCase()} has been successfully generated.`,
-        })
-      }, 2000)
+      const policy = await generatePolicy(businessDescription, policyType);
+      setGeneratedPolicy(policy);
+      
+      const selectedPolicy = policyTypes.find(p => p.id === policyType);
+      const policyName = selectedPolicy ? selectedPolicy.name : 'Policy';
+      
+      toast({
+        title: "Policy Generated",
+        description: `Your ${policyName.toLowerCase()} has been successfully generated.`,
+      });
     } catch (error) {
-      setIsGenerating(false)
+      console.error('Error generating policy:', error);
       toast({
         title: "Generation Failed",
         description: "There was an error generating your policy. Please try again.",
         variant: "destructive",
-      })
+      });
+    } finally {
+      setIsGenerating(false);
     }
   }
 
@@ -113,13 +112,13 @@ function App() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="policy-type">Policy Type</Label>
-                <Select value={policyType} onValueChange={setPolicyType}>
+                <Select value={policyType} onValueChange={(value) => setPolicyType(value as PolicyType)}>
                   <SelectTrigger id="policy-type" className="w-full">
                     <SelectValue placeholder="Select policy type" />
                   </SelectTrigger>
                   <SelectContent>
                     {policyTypes.map((policy) => (
-                      <SelectItem key={policy.id} value={policy.id} className="flex items-center gap-2">
+                      <SelectItem key={policy.id} value={policy.id}>
                         <div className="flex items-center gap-2">
                           {policy.icon}
                           <span>{policy.name}</span>
@@ -143,7 +142,7 @@ function App() {
             <CardFooter>
               <Button 
                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
-                onClick={generatePolicy}
+                onClick={handleGeneratePolicy}
                 disabled={isGenerating || !businessDescription.trim()}
               >
                 {isGenerating ? (
