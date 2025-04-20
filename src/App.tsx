@@ -98,7 +98,7 @@ function App() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-300/20 dark:bg-purple-700/20 rounded-full blur-3xl -z-10"></div>
           <div className="flex items-center justify-center mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-purple-400/20 dark:bg-purple-600/30 rounded-full blur-xl animate-pulse-glow"></div>
+              <div className="absolute inset-0 bg-purple-400/20 dark:bg-purple-600/30 rounded-full blur-xl animate-pulse-slow"></div>
               <div className="relative bg-white dark:bg-gray-800 rounded-full p-4 shadow-lg">
                 <Sparkles className="h-10 w-10 text-purple-600 dark:text-purple-400" />
               </div>
@@ -110,7 +110,7 @@ function App() {
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-xl mt-4 leading-relaxed">
             Generate professional legal policies for your business in seconds using AI
           </p>
-          <div className="flex justify-center mt-8 gap-2">
+          <div className="flex flex-wrap justify-center mt-8 gap-2">
             <div className="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
               <Zap className="h-5 w-5 text-amber-500" />
               <span className="text-sm font-medium">AI-Powered</span>
@@ -127,9 +127,9 @@ function App() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          <Card className="shadow-xl border-0 overflow-hidden card-hover-effect relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
-            <div className="card-decoration card-decoration-1"></div>
-            <div className="card-decoration card-decoration-2"></div>
+          <Card className="shadow-xl border-0 overflow-hidden relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-200/50 dark:bg-purple-800/20 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-200/50 dark:bg-indigo-800/20 rounded-full -ml-16 -mb-16 blur-2xl"></div>
             <CardHeader className="relative z-10 pb-4">
               <div className="flex items-center gap-3 mb-2">
                 <div className="bg-purple-100 dark:bg-purple-900/50 p-2 rounded-lg">
@@ -147,7 +147,7 @@ function App() {
               <div className="space-y-3">
                 <Label htmlFor="policy-type" className="text-base font-medium">Policy Type</Label>
                 <Select value={policyType} onValueChange={(value) => setPolicyType(value as PolicyType)}>
-                  <SelectTrigger id="policy-type" className="w-full bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50 shadow-sm input-focus-ring">
+                  <SelectTrigger id="policy-type" className="w-full bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50 shadow-sm">
                     <SelectValue placeholder="Select policy type" />
                   </SelectTrigger>
                   <SelectContent className="bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50">
@@ -169,7 +169,7 @@ function App() {
                 <Textarea
                   id="business-description"
                   placeholder="Describe your business, products, services, and how you collect and use customer data..."
-                  className="min-h-[250px] resize-y bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50 shadow-sm input-focus-ring"
+                  className="min-h-[250px] resize-y bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50 shadow-sm"
                   value={businessDescription}
                   onChange={(e) => setBusinessDescription(e.target.value)}
                 />
@@ -181,7 +181,8 @@ function App() {
             </CardContent>
             <CardFooter className="relative z-10 pt-2">
               <Button 
-                className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium py-6 rounded-xl shadow-lg transition-all duration-300 button-glow"
+                variant="gradient"
+                className="w-full py-6 rounded-xl shadow-lg"
                 onClick={handleGeneratePolicy}
                 disabled={isGenerating || !businessDescription.trim()}
               >
@@ -200,9 +201,9 @@ function App() {
             </CardFooter>
           </Card>
 
-          <Card className="shadow-xl border-0 overflow-hidden card-hover-effect relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
-            <div className="card-decoration card-decoration-1"></div>
-            <div className="card-decoration card-decoration-2"></div>
+          <Card className="shadow-xl border-0 overflow-hidden relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-indigo-200/50 dark:bg-indigo-800/20 rounded-full -ml-16 -mt-16 blur-2xl"></div>
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-200/50 dark:bg-purple-800/20 rounded-full -mr-16 -mb-16 blur-2xl"></div>
             <CardHeader className="relative z-10 pb-4">
               <div className="flex items-center gap-3 mb-2">
                 <div className="bg-indigo-100 dark:bg-indigo-900/50 p-2 rounded-lg">
