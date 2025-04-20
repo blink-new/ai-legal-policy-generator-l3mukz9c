@@ -8,7 +8,7 @@ import { Label } from './components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs'
 import { Toaster } from './components/ui/toaster'
 import { useToast } from './hooks/use-toast'
-import { Loader2, Copy, Download, FileText, Shield, Scale, Sparkles, CheckCircle2, Lightbulb, Lock, Zap } from 'lucide-react'
+import { Loader2, Copy, Download, FileText, Shield, Scale, Sparkles, CheckCircle2, Lightbulb, Lock, Zap, Star, BookOpen, RefreshCw } from 'lucide-react'
 import { generatePolicy, type PolicyType } from './lib/api'
 import { supabase } from './lib/supabase'
 
@@ -93,15 +93,17 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 dark:from-gray-900 dark:via-indigo-950 dark:to-purple-950 hero-pattern">
+      {/* Decorative elements */}
+      <div className="fixed top-20 left-10 w-64 h-64 bg-purple-200/30 dark:bg-purple-800/10 rounded-full blur-3xl -z-10"></div>
+      <div className="fixed bottom-20 right-10 w-80 h-80 bg-indigo-200/30 dark:bg-indigo-800/10 rounded-full blur-3xl -z-10"></div>
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-purple-100/20 to-transparent dark:from-purple-900/5 dark:to-transparent rounded-full blur-3xl -z-10"></div>
+      
       <div className="max-w-6xl mx-auto px-4 py-12 md:py-20">
         <header className="text-center mb-16 relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-300/20 dark:bg-purple-700/20 rounded-full blur-3xl -z-10"></div>
-          <div className="flex items-center justify-center mb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-purple-400/20 dark:bg-purple-600/30 rounded-full blur-xl animate-pulse-slow"></div>
-              <div className="relative bg-white dark:bg-gray-800 rounded-full p-4 shadow-lg">
-                <Sparkles className="h-10 w-10 text-purple-600 dark:text-purple-400" />
-              </div>
+          <div className="relative mb-6 inline-block">
+            <div className="absolute inset-0 bg-purple-400/20 dark:bg-purple-600/30 rounded-full blur-xl animate-pulse-slow"></div>
+            <div className="relative bg-white dark:bg-gray-800 rounded-full p-4 shadow-lg">
+              <Sparkles className="h-10 w-10 text-purple-600 dark:text-purple-400" />
             </div>
           </div>
           <h1 className="text-5xl md:text-6xl font-extrabold mb-4 gradient-text tracking-tight">
@@ -110,7 +112,7 @@ function App() {
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-xl mt-4 leading-relaxed">
             Generate professional legal policies for your business in seconds using AI
           </p>
-          <div className="flex flex-wrap justify-center mt-8 gap-2">
+          <div className="flex flex-wrap justify-center mt-8 gap-3">
             <div className="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
               <Zap className="h-5 w-5 text-amber-500" />
               <span className="text-sm font-medium">AI-Powered</span>
@@ -127,7 +129,7 @@ function App() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          <Card className="shadow-xl border-0 overflow-hidden relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl">
+          <Card className="shadow-xl border-0 overflow-hidden relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl transition-all duration-300 hover:shadow-purple-200/50 dark:hover:shadow-purple-900/30">
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-200/50 dark:bg-purple-800/20 rounded-full -mr-16 -mt-16 blur-2xl"></div>
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-200/50 dark:bg-indigo-800/20 rounded-full -ml-16 -mb-16 blur-2xl"></div>
             <CardHeader className="relative z-10 pb-4">
@@ -145,7 +147,15 @@ function App() {
             </CardHeader>
             <CardContent className="space-y-6 relative z-10 pt-2">
               <div className="space-y-3">
-                <Label htmlFor="policy-type" className="text-base font-medium">Policy Type</Label>
+                <Label htmlFor="policy-type" className="text-base font-medium flex items-center gap-2">
+                  Policy Type
+                  <div className="relative group">
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg text-xs text-gray-600 dark:text-gray-300 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      Choose the type of legal policy you need for your business
+                    </div>
+                    <Lightbulb className="h-4 w-4 text-gray-400 hover:text-amber-500 transition-colors" />
+                  </div>
+                </Label>
                 <Select value={policyType} onValueChange={(value) => setPolicyType(value as PolicyType)}>
                   <SelectTrigger id="policy-type" className="w-full bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50 shadow-sm">
                     <SelectValue placeholder="Select policy type" />
@@ -165,16 +175,24 @@ function App() {
                 </Select>
               </div>
               <div className="space-y-3">
-                <Label htmlFor="business-description" className="text-base font-medium">Business Description</Label>
+                <Label htmlFor="business-description" className="text-base font-medium flex items-center gap-2">
+                  Business Description
+                  <div className="relative group">
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg text-xs text-gray-600 dark:text-gray-300 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      Describe your business operations, data collection practices, and services in detail
+                    </div>
+                    <Lightbulb className="h-4 w-4 text-gray-400 hover:text-amber-500 transition-colors" />
+                  </div>
+                </Label>
                 <Textarea
                   id="business-description"
                   placeholder="Describe your business, products, services, and how you collect and use customer data..."
-                  className="min-h-[250px] resize-y bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50 shadow-sm"
+                  className="min-h-[250px] resize-y bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-900/50 shadow-sm focus:border-purple-300 dark:focus:border-purple-700 transition-colors"
                   value={businessDescription}
                   onChange={(e) => setBusinessDescription(e.target.value)}
                 />
                 <p className="text-sm text-gray-500 dark:text-gray-400 italic flex items-center gap-2">
-                  <Lightbulb className="h-4 w-4 text-amber-500" />
+                  <Lightbulb className="h-4 w-4 text-amber-500 flex-shrink-0" />
                   <span>The more details you provide, the more accurate and tailored your policy will be.</span>
                 </p>
               </div>
@@ -182,7 +200,7 @@ function App() {
             <CardFooter className="relative z-10 pt-2">
               <Button 
                 variant="gradient"
-                className="w-full py-6 rounded-xl shadow-lg"
+                className="w-full py-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-purple-300/50 dark:hover:shadow-purple-900/30"
                 onClick={handleGeneratePolicy}
                 disabled={isGenerating || !businessDescription.trim()}
               >
@@ -201,7 +219,7 @@ function App() {
             </CardFooter>
           </Card>
 
-          <Card className="shadow-xl border-0 overflow-hidden relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl">
+          <Card className="shadow-xl border-0 overflow-hidden relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl transition-all duration-300 hover:shadow-indigo-200/50 dark:hover:shadow-indigo-900/30">
             <div className="absolute top-0 left-0 w-32 h-32 bg-indigo-200/50 dark:bg-indigo-800/20 rounded-full -ml-16 -mt-16 blur-2xl"></div>
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-200/50 dark:bg-purple-800/20 rounded-full -mr-16 -mb-16 blur-2xl"></div>
             <CardHeader className="relative z-10 pb-4">
@@ -269,13 +287,18 @@ function App() {
         <div className="max-w-4xl mx-auto mb-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
           <Tabs defaultValue="about" className="w-full">
             <TabsList className="w-full grid grid-cols-3 bg-gray-100/80 dark:bg-gray-900/80 p-1 rounded-t-2xl">
-              {["about", "features", "faq"].map((tab) => (
+              {[
+                { id: "about", icon: <BookOpen className="h-4 w-4 mr-1" /> },
+                { id: "features", icon: <Star className="h-4 w-4 mr-1" /> },
+                { id: "faq", icon: <Lightbulb className="h-4 w-4 mr-1" /> }
+              ].map((tab) => (
                 <TabsTrigger 
-                  key={tab} 
-                  value={tab} 
-                  className="py-3 capitalize font-medium text-gray-600 dark:text-gray-400 tab-transition data-[state=active]:text-purple-700 dark:data-[state=active]:text-purple-400 data-[state=active]:shadow-sm"
+                  key={tab.id} 
+                  value={tab.id} 
+                  className="py-3 capitalize font-medium text-gray-600 dark:text-gray-400 tab-transition data-[state=active]:text-purple-700 dark:data-[state=active]:text-purple-400 data-[state=active]:shadow-sm flex items-center justify-center"
                 >
-                  {tab}
+                  {tab.icon}
+                  {tab.id}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -322,7 +345,7 @@ function App() {
                     description: "Download in markdown format or copy directly to clipboard for immediate use"
                   },
                   {
-                    icon: <Zap className="h-6 w-6 text-amber-600 dark:text-amber-400" />,
+                    icon: <RefreshCw className="h-6 w-6 text-amber-600 dark:text-amber-400" />,
                     title: "Fast Generation",
                     description: "Create comprehensive legal documents in seconds, not hours or days"
                   }
@@ -362,7 +385,7 @@ function App() {
                     answer: "It's recommended to review and update your legal policies whenever you make significant changes to your business practices, introduce new features that affect data collection or user interactions, or when relevant laws and regulations change. Many businesses review their policies at least annually."
                   }
                 ].map((faq, index) => (
-                  <div key={index} className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-purple-100 dark:border-purple-900/30">
+                  <div key={index} className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-purple-100 dark:border-purple-900/30 hover:border-purple-300 dark:hover:border-purple-700 transition-colors">
                     <h4 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-3">{faq.question}</h4>
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{faq.answer}</p>
                   </div>
