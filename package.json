@@ -66,7 +66,8 @@
     "express": "latest",
     "cors": "latest",
     "dotenv": "latest",
-    "axios": "latest"
+    "axios": "latest",
+    "@supabase/supabase-js": "latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
