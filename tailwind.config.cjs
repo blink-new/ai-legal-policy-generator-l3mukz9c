@@ -66,19 +66,58 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "pulse-slow": {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.8 },
+        },
+        "float": {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-slow": "pulse-slow 3s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
       },
       typography: {
         DEFAULT: {
           css: {
             maxWidth: '100%',
+            color: 'inherit',
+            a: {
+              color: 'hsl(var(--primary))',
+              textDecoration: 'underline',
+              '&:hover': {
+                color: 'hsl(var(--primary) / 0.8)',
+              },
+            },
+            h1: {
+              color: 'hsl(var(--primary))',
+            },
+            h2: {
+              color: 'hsl(var(--primary))',
+            },
+            h3: {
+              color: 'hsl(var(--primary))',
+            },
+            h4: {
+              color: 'hsl(var(--primary))',
+            },
+            code: {
+              color: 'hsl(var(--primary))',
+            },
+            pre: {
+              backgroundColor: 'hsl(var(--muted))',
+            },
           },
         },
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
+  plugins: [
+    require("tailwindcss-animate"),
+    require('@tailwindcss/typography'),
+  ],
 }
