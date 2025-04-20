@@ -93,12 +93,12 @@ function App() {
       <div className="max-w-6xl mx-auto">
         <header className="text-center mb-12">
           <div className="flex items-center justify-center mb-4">
-            <Sparkles className="h-10 w-10 text-indigo-600 dark:text-indigo-400 mr-2" />
+            <Sparkles className="h-8 w-8 text-indigo-600 dark:text-indigo-400 mr-3" />
             <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
               AI Legal Policy Generator
             </h1>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg mt-3">
             Generate professional legal policies for your business in seconds using AI
           </p>
         </header>
